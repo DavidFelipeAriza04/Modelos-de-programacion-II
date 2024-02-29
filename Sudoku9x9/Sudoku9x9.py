@@ -8,7 +8,7 @@ N = 9
 def printing(arr):
     for i in range(N):
         if(i%3==0):
-                print(Fore.RED + "-------------------------")
+            print(Fore.RED + "-------------------------")
         for j in range(N):
             if(j%3==0):
                 print(Fore.RED + "|", end=" ")
