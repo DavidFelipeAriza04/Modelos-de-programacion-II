@@ -5,5 +5,6 @@ def distinto(n):
         a = a ^ i
     return a
 
-n = [1,3,5,6,6,5,1]
-print(distinto(n))
+print("Ingrese los numeros separados por un espacio: ")
+lista =[int(x) for x in input().split()]
+print(distinto(lista))
