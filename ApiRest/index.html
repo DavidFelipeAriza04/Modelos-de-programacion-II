@@ -14,39 +14,37 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body style="padding:20px; display: flex; flex-direction: column; justify-content: center;">
-    <div style="display: flex; justify-content: center; margin: 10px;">
+<body style="padding:20px; display: flex; flex-direction: column; align-items: center;">
+    <div style="display: flex; align-items: center; flex-direction: column; margin: 20px;">
         <h1 id="Titulo">API REST</h1>
     </div>
-    <table class="table table-bordered border-primary">
+    <table id="tabla_personas" class="table table-bordered border-primary">
         <thead>
             <tr>
                 <th scope="col">id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Edad</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
         </tbody>
     </table>
+    <button type="button" class="btn btn-success" onclick="MostrarAnadirPersona()">Agregar Persona</button>
+    <div id="div_agregar" class="hidden">
+        <div class="mb-3">
+            <label for="InputNombre" class="form-label form-control-sm" style="margin-bottom: -3px;">Nombre</label>
+            <input type="text" class="form-control form-control-sm" id="InputNombre">
+            <label for="InputApellido" class="form-label form-control-sm" style="margin-bottom: -3px;">Apellido</label>
+            <input type="text" class="form-control form-control-sm" id="InputApellido">
+            <label for="InputEdad" class="form-label form-control-sm" style="margin-bottom: -3px;">Edad</label>
+            <input type="number" class="form-control form-control-sm" id="InputEdad">
+        </div>
+        <button type="button" class="btn btn-outline-success" style="width: 50%;"
+            onclick="AgregarPersona()">Agregar</button>
+    </div>
+
 
 </body>
 
