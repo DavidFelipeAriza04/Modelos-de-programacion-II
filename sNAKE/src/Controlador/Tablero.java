@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Contrlador;
+package Controlador;
 
 import Modelo.Comida;
 import Modelo.Snake;
@@ -25,12 +25,14 @@ public class Tablero extends Thread {
     private ArrayList<int[]> posicionCuerpo;
     private int posicionCabeza[];
     private int posicionCola[];
+
     public Tablero() {
         vista = new Vista();
+        posicionCabeza = new int[] { (int) (filas / 2), (int) (columnas / 2) };
+        System.out.println(posicionCabeza[0] + " " + posicionCabeza[1]);
         posicionCuerpo = new ArrayList<>();
         posicionCuerpo.add(new int[] { (int) (filas / 2), (int) ((columnas / 2) - 1) });
-        posicionCabeza = new int[]{ (int) (filas / 2), (int) (columnas / 2) };
-        posicionCola = new int[]{ (int) (filas / 2), (int) ((columnas / 2) - posicionCuerpo.size() - 1) };
+        posicionCola = new int[] { (int) (filas / 2), (int) ((columnas / 2) - posicionCuerpo.size() - 1) };
         snake = new Snake(posicionCabeza, posicionCuerpo, posicionCola);
         control = new Controles();
         crearComida();
@@ -50,9 +52,10 @@ public class Tablero extends Thread {
             while (true) {
                 char d = control.obtenerDireccion();
                 // vista.mostrarPosicionComida(comida.getPosicion());
-                vista.mostrarPosicionSnake(snake.getCabeza(), snake.getCuerpo(), snake.getCola());
 
-                if (snake.getCabeza()[1] + 1 == 14) {
+                if (snake.getCabeza()[1] == 13) {
+                    posicionCuerpo = new ArrayList<>();
+                    posicionCuerpo.add(new int[] { (int) (filas / 2), (int) ((columnas / 2) - 1) });
                     snake = new Snake(posicionCabeza, posicionCuerpo, posicionCola);
                 } else {
                     snake.setCabeza(new int[] { snake.getCabeza()[0], snake.getCabeza()[1] + 1 });
@@ -62,10 +65,10 @@ public class Tablero extends Thread {
                     }
                     snake.setCola(new int[] { snake.getCola()[0], snake.getCola()[1] + 1 });
                 }
-
+                vista.mostrarPosicionSnake(snake.getCabeza(), snake.getCuerpo(), snake.getCola());
                 vista.mostrarTablero(filas, columnas, snake.getCabeza(), snake.getCuerpo(), snake.getCola(),
                         comida.getPosicion());
-                this.sleep(1000);
+                Thread.sleep(1000);
                 vista.limpiarPantalla();
                 System.out.print(d);
             }
