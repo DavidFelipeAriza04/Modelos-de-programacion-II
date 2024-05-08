@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Estudiantes
  */
-public class Vista {
+public class Vista{
 
     public void mostrarPosicionComida(int[] posComida) {
         System.out.println("Comida:" + posComida[0] + " " + posComida[1]);
@@ -50,6 +50,30 @@ public class Vista {
                 }
             }
             System.out.print("\n");
+        }
+    }
+    
+        public void limpiarPantalla() {
+        try {
+            // Verifica el sistema operativo
+            String os = System.getProperty("os.name");
+            ProcessBuilder pb;
+
+            if (os.contains("Windows")) {
+                // Comando para limpiar la pantalla en Windows
+                pb = new ProcessBuilder("cmd", "/c", "cls");
+
+            } else {
+                // Comando para limpiar la pantalla en Unix (Linux/macOS)
+                pb = new ProcessBuilder("clear");
+            }
+
+            // Inicia el proceso para ejecutar el comando
+            pb.inheritIO();
+            Process process = pb.start();
+            process.waitFor();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
