@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Estudiantes
  */
-public class Vista{
+public class Vista {
 
     public void mostrarPosicionComida(int[] posComida) {
         System.out.println("Comida:" + posComida[0] + " " + posComida[1]);
@@ -25,35 +25,75 @@ public class Vista{
         System.out.println("Cola:" + posCola[0] + posCola[1]);
     }
 
-    public void mostrarTablero(int rows, int cols, int[] posCabeza, ArrayList<int[]> posCuerpo, int[] posCola, int[] posComida) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (i == 0 || i == rows - 1 || j == 0 || j == cols - 1) {
-                    System.out.print("||");
-                } else if (i == posComida[0] && j == posComida[1]) {
-                    System.out.print("# ");
-                } else {
-                    if (i == posCabeza[0] && j == posCabeza[1]) {
-                        System.out.print("> ");
-                    } else if (i == posCola[0] && j == posCola[1]) {
-                        System.out.print(" 0");
-                    } else {
-                        for (int[] coor : posCuerpo) {
-                            if (i == coor[0] && j == coor[1]) {
-                                System.out.print("==");
-                            }
-                            if (i != coor[0] || j != coor[1]) {
-                                System.out.print("  ");
-                            }
-                        }
-                    }
+    public void mostrarTablero(int filas, int columnas, int[] posCabeza, ArrayList<int[]> posCuerpo, int[] posCola,
+            int[] posComida, char direccion) {
+        // Construye una cadena para imprimir el tablero
+        StringBuilder tablero = new StringBuilder();
+
+        // Recorrer cada fila y columna del tablero
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                // Manejar bordes del tablero
+                if (i == 0 || i == filas - 1 || j == 0 || j == columnas - 1) {
+                    tablero.append("|");
+                }
+                // Manejar comida
+                else if (i == posComida[0] && j == posComida[1]) {
+                    tablero.append("#");
+                }
+                // Manejar cabeza de la serpiente
+                else if (i == posCabeza[0] && j == posCabeza[1]) {
+                    tablero.append(obtenerSimboloCabeza(direccion));
+                }
+                // Manejar cuerpo de la serpiente
+                else if (esCuerpo(posCuerpo, i, j)) {
+                    tablero.append("o");
+                }
+                // Manejar cola de la serpiente
+                else if (i == posCola[0] && j == posCola[1]) {
+                    tablero.append("o");
+                }
+                // Espacio vacío
+                else {
+                    tablero.append(" ");
                 }
             }
-            System.out.print("\n");
+            tablero.append("\n");
+        }
+
+        // Imprimir el tablero construido
+        System.out.print(tablero.toString());
+    }
+
+    // Método para verificar si una posición coincide con alguna parte del cuerpo de
+    // la serpiente
+    private boolean esCuerpo(ArrayList<int[]> posCuerpo, int i, int j) {
+        for (int[] coordenada : posCuerpo) {
+            if (coordenada[0] == i && coordenada[1] == j) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Método para obtener el símbolo de la cabeza de la serpiente según la
+    // dirección
+    private char obtenerSimboloCabeza(char direccion) {
+        switch (direccion) {
+            case 'd':
+                return '>';
+            case 'w':
+                return '^';
+            case 'a':
+                return '<';
+            case 's':
+                return 'v';
+            default:
+                return ' ';
         }
     }
-    
-        public void limpiarPantalla() {
+
+    public void limpiarPantalla() {
         try {
             // Verifica el sistema operativo
             String os = System.getProperty("os.name");
