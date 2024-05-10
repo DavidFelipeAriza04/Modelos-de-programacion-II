@@ -17,12 +17,13 @@ public class Vista {
     }
 
     public void mostrarPosicionSnake(int[] posCabeza, ArrayList<int[]> posCuerpo, int[] posCola) {
-        System.out.println("Cabeza:" + posCabeza[0] + posCabeza[1]);
+        /*System.out.println("Cabeza:" + posCabeza[0] + posCabeza[1]);
         System.out.println("Cuerpo:");
         for (int[] coordenada : posCuerpo) {
             System.out.println(coordenada[0] + " " + coordenada[1]);
         }
         System.out.println("Cola:" + posCola[0] + posCola[1]);
+        */
     }
 
     public void mostrarTablero(int filas, int columnas, int[] posCabeza, ArrayList<int[]> posCuerpo, int[] posCola,

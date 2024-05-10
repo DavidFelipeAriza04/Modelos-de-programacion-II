@@ -18,6 +18,7 @@ public class Controles extends Thread
         try{
             while(true){
                 char input = (char) System.in.read();
+                System.out.print(input);
                 cambiarDireccion(input);
             }
         }catch(Exception e){
