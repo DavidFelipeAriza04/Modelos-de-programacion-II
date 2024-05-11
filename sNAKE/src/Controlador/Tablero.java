@@ -29,15 +29,10 @@ public class Tablero extends Thread {
     private char d;
 
     public Tablero() {
-        vista = new Vista();
-        posicionCabeza = new int[] { (int) (filas / 2), (int) (columnas / 2) };
-        System.out.println(posicionCabeza[0] + " " + posicionCabeza[1]);
+        vista = new Vista(); 
         posicionInicialCuerpo = new ArrayList<>();
-        posicionInicialCuerpo.add(new int[] { (int) (filas / 2), (int) ((columnas / 2) - 1) });
-        posicionInicialCuerpo.add(new int[] { (int) (filas / 2), (int) ((columnas / 2) - 2) });
-        posicionInicialCuerpo.add(new int[] { (int) (filas / 2), (int) ((columnas / 2) - 3) });
-        posicionCuerpo = (ArrayList<int[]>) posicionInicialCuerpo.clone();
-        posicionCola = new int[] { (int) (filas / 2), (int) ((columnas / 2) - posicionCuerpo.size() - 1) };
+        iniciarSerpiente(posicionInicialCuerpo);
+        System.out.println(posicionCabeza[0] + " " + posicionCabeza[1]);
         snake = new Snake(posicionCabeza, posicionCuerpo, posicionCola);
         control = new Controles();
         crearComida();
@@ -45,8 +40,8 @@ public class Tablero extends Thread {
     }
 
     public void crearComida() {
-        int x = new Random().nextInt(1, columnas - 1);
-        int y = new Random().nextInt(1, filas - 1);
+        int x = (new Random().nextInt(columnas - 2) + 1);
+        int y = (new Random().nextInt(filas - 2) + 1);
         int posicion[] = { y, x };
         comida.setPosicion(posicion);
     }
@@ -94,10 +89,10 @@ public class Tablero extends Thread {
         try {
             while (true) {
                 d = control.obtenerDireccion();
+                vista.limpiarPantalla();
                 // vista.mostrarPosicionComida(comida.getPosicion());
 
-                if (snake.getCabeza()[0] == 0 || snake.getCabeza()[1] == 0 || snake.getCabeza()[1] == columnas - 1
-                        || snake.getCabeza()[0] == filas - 1) {
+                if(colision(snake)){
                     RestablecerSnake();
                 } else {
                     if (snake.getCabeza()[0] == comida.getPosicion()[0]
@@ -111,7 +106,7 @@ public class Tablero extends Thread {
                 vista.mostrarTablero(filas, columnas, snake.getCabeza(), snake.getCuerpo(), snake.getCola(),
                         comida.getPosicion(), d);
                 Thread.sleep(300);
-                vista.limpiarPantalla();
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,9 +114,37 @@ public class Tablero extends Thread {
 
     }
 
+    //VALIDA TODAS LA COLICIONES
+    public Boolean colision(Snake snake){
+        int[] cabeza = snake.getCabeza();
+        int[] cola = snake.getCola();
+        if((cabeza[0] == cola[0] && cabeza[1] == cola[1]) || (snake.getCabeza()[0] == 0 || snake.getCabeza()[1] == 0 || snake.getCabeza()[1] == columnas - 1
+        || snake.getCabeza()[0] == filas - 1)){
+            return true;
+        }
+        for (int[] cuerpo : snake.getCuerpo()) {
+            if(cabeza[0] == cuerpo[0] && cabeza[1] == cuerpo[1]){
+                return true;
+            }
+        }            
+        return false;
+    }
+
+    //GENERA LA POCICION INICIAL DE LA SERPIENTE
+    public void iniciarSerpiente(ArrayList<int[]> posicionInicialCuerpo){
+        posicionCabeza = new int[] { (int) (filas / 2), (int) (columnas / 2) };
+        for (int i = 1; i <= 3; i++) {
+            posicionInicialCuerpo.add(new int[] { (int) (filas / 2), (int) ((columnas / 2) - i) });      
+        }
+        posicionCuerpo = (ArrayList<int[]>) posicionInicialCuerpo.clone();
+        posicionCola = new int[] { (int) (filas / 2), (int) ((columnas / 2) - posicionCuerpo.size() - 1) };
+    }
+
+    //RESTSBLECE EL JUEGO
     public void RestablecerSnake() {
         posicionCuerpo = (ArrayList<int[]>) posicionInicialCuerpo.clone();
         snake = new Snake(posicionCabeza, posicionCuerpo, posicionCola);
-        d = 'd';
+        control.restar();
+        crearComida();
     }
 }

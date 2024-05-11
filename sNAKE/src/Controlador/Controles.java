@@ -18,7 +18,6 @@ public class Controles extends Thread
         try{
             while(true){
                 char input = (char) System.in.read();
-                System.out.print(input);
                 cambiarDireccion(input);
             }
         }catch(Exception e){
@@ -39,6 +38,10 @@ public class Controles extends Thread
         }
     }
 
+    //REESTABLECE LA DIRECCION 
+    public synchronized void restar(){
+        direccionActual = 'd';
+    }
     // Método para obtener la dirección actual
     public synchronized char obtenerDireccion() {
         return direccionActual;
