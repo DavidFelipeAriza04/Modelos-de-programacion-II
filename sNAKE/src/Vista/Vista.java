@@ -16,16 +16,6 @@ public class Vista {
         System.out.println("Comida:" + posComida[0] + " " + posComida[1]);
     }
 
-    public void mostrarPosicionSnake(int[] posCabeza, ArrayList<int[]> posCuerpo, int[] posCola) {
-        /*System.out.println("Cabeza:" + posCabeza[0] + posCabeza[1]);
-        System.out.println("Cuerpo:");
-        for (int[] coordenada : posCuerpo) {
-            System.out.println(coordenada[0] + " " + coordenada[1]);
-        }
-        System.out.println("Cola:" + posCola[0] + posCola[1]);
-        */
-    }
-
     public void mostrarTablero(int filas, int columnas, int[] posCabeza, ArrayList<int[]> posCuerpo, int[] posCola,
             int[] posComida, char direccion) {
         // Construye una cadena para imprimir el tablero

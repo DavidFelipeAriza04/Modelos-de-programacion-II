@@ -4,27 +4,25 @@
  */
 package Controlador;
 
-
 /**
  *
  * @author Alejandro Penagos
  */
-public class Controles extends Thread
-{
+public class Controles extends Thread {
     private char direccionActual = 'd';
-    
+
     @Override
-    public void run(){
-        try{
-            while(true){
+    public void run() {
+        try {
+            while (true) {
                 char input = (char) System.in.read();
                 cambiarDireccion(input);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     // Método para cambiar la dirección de la serpiente
     private synchronized void cambiarDireccion(char input) {
         if (input == 'w' && direccionActual != 's') {
@@ -38,10 +36,11 @@ public class Controles extends Thread
         }
     }
 
-    //REESTABLECE LA DIRECCION 
-    public synchronized void restar(){
+    // REESTABLECE LA DIRECCION
+    public synchronized void restar() {
         direccionActual = 'd';
     }
+
     // Método para obtener la dirección actual
     public synchronized char obtenerDireccion() {
         return direccionActual;
