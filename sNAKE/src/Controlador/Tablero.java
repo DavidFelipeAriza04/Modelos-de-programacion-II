@@ -29,6 +29,10 @@ public class Tablero extends Thread {
     private char d;
 
     public Tablero() {
+        iniciar();
+    }
+
+    public void iniciar() {
         vista = new Vista();
         posicionInicialCuerpo = new ArrayList<>();
         iniciarSnake(posicionInicialCuerpo);
@@ -40,10 +44,11 @@ public class Tablero extends Thread {
     public void crearComida() {
         int x = (new Random().nextInt(columnas - 2) + 1);
         int y = (new Random().nextInt(filas - 2) + 1);
-        int posicion[] = { y, x };
+        int posicion[] = {y, x};
         comida.setPosicion(posicion);
     }
 
+    @Override
     public void run() {
         controles.start();
         try {
@@ -79,7 +84,7 @@ public class Tablero extends Thread {
         int[] cola = snake.getCola();
         if ((cabeza[0] == cola[0] && cabeza[1] == cola[1])
                 || (snake.getCabeza()[0] == 0 || snake.getCabeza()[1] == 0 || snake.getCabeza()[1] == columnas - 1
-                        || snake.getCabeza()[0] == filas - 1)) {
+                || snake.getCabeza()[0] == filas - 1)) {
             return true;
         }
         for (int[] cuerpo : snake.getCuerpo()) {
@@ -92,12 +97,12 @@ public class Tablero extends Thread {
 
     // GENERA LA POCICION INICIAL DE LA SERPIENTE
     public void iniciarSnake(ArrayList<int[]> posicionInicialCuerpo) {
-        posicionCabeza = new int[] { (int) (filas / 2), (int) (columnas / 2) };
+        posicionCabeza = new int[]{(int) (filas / 2), (int) (columnas / 2)};
         for (int i = 1; i <= 3; i++) {
-            posicionInicialCuerpo.add(new int[] { (int) (filas / 2), (int) ((columnas / 2) - i) });
+            posicionInicialCuerpo.add(new int[]{(int) (filas / 2), (int) ((columnas / 2) - i)});
         }
         posicionCuerpo = (ArrayList<int[]>) posicionInicialCuerpo.clone();
-        posicionCola = new int[] { (int) (filas / 2), (int) ((columnas / 2) - posicionCuerpo.size() - 1) };
+        posicionCola = new int[]{(int) (filas / 2), (int) ((columnas / 2) - posicionCuerpo.size() - 1)};
         snake = new Snake(posicionCabeza, posicionCuerpo, posicionCola);
     }
 

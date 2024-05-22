@@ -52,9 +52,6 @@ public class Snake implements Movible {
 
     @Override
     public void mover(char mov, int[] posicionComida) {
-        if (this.getCabeza() == posicionComida) {
-            System.out.println("Comiendo");
-        }
         int[] cabezaAnterior = this.getCabeza().clone();
         ArrayList<int[]> posicionCuerpoAnterior = (ArrayList<int[]>) this.getCuerpo().clone();
 
